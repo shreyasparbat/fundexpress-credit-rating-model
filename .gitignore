@@ -60,3 +60,5 @@ target/
 # Virtual env
 venv/
 \.idea/
+
+\.vscode/
