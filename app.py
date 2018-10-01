@@ -121,11 +121,11 @@ def make_prediction():
             features.append(1)
             features.append(0)
             features.append(0)
-        elif address == 'H':
+        elif address == 'F':
             features.append(0)
             features.append(1)
             features.append(0)
-        elif address == 'N':
+        elif address == 'L':
             features.append(0)
             features.append(0)
             features.append(1)
