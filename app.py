@@ -115,19 +115,19 @@ def make_prediction():
         features.append(0)
         features.append(1)
 
-    # Add address
-    if address == 'C':
-        features.append(1)
-        features.append(0)
-        features.append(0)
-    elif address == 'H':
-        features.append(0)
-        features.append(1)
-        features.append(0)
-    elif address == 'N':
-        features.append(0)
-        features.append(0)
-        features.append(1)
+        # Add address
+        if address == 'C':
+            features.append(1)
+            features.append(0)
+            features.append(0)
+        elif address == 'H':
+            features.append(0)
+            features.append(1)
+            features.append(0)
+        elif address == 'N':
+            features.append(0)
+            features.append(0)
+            features.append(1)
 
     if tel == 'H':
         features.append(1)
