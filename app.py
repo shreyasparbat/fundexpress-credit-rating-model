@@ -182,6 +182,12 @@ def make_prediction():
     })
 
 
+# POST: predict default probability
+@app.route('/gold_bar_ocr', methods=['POST'])
+def make_prediction():
+    pass
+
+
 # Run server
 if __name__ == '__main__':
     clf = joblib.load('models/model_3.pkl')
