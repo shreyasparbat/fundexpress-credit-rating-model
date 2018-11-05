@@ -115,19 +115,19 @@ def make_prediction():
         features.append(0)
         features.append(1)
 
-        # Add address
-        if address == 'C':
-            features.append(1)
-            features.append(0)
-            features.append(0)
-        elif address == 'H':
-            features.append(0)
-            features.append(1)
-            features.append(0)
-        elif address == 'N':
-            features.append(0)
-            features.append(0)
-            features.append(1)
+    # Add address
+    if address == 'C':
+        features.append(1)
+        features.append(0)
+        features.append(0)
+    elif address == 'H':
+        features.append(0)
+        features.append(1)
+        features.append(0)
+    elif address == 'N':
+        features.append(0)
+        features.append(0)
+        features.append(1)
 
     if tel == 'H':
         features.append(1)
@@ -143,6 +143,7 @@ def make_prediction():
     print(features_array.shape)
 
     # Make predictions
+    clf = joblib.load('models/model.pkl')
     predicted_probs = clf.predict_proba(features_array)
     c_percent = predicted_probs[0, 0]
     d_percent = predicted_probs[0, 1]
@@ -184,11 +185,10 @@ def make_prediction():
 
 # POST: predict default probability
 @app.route('/gold_bar_ocr', methods=['POST'])
-def make_prediction():
+def get_text():
     pass
 
 
 # Run server
 if __name__ == '__main__':
-    clf = joblib.load('models/model_3.pkl')
     app.run(host='0.0.0.0')
