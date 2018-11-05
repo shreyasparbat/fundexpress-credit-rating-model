@@ -185,7 +185,7 @@ def make_prediction():
 
 # POST: predict default probability
 @app.route('/gold_bar_ocr', methods=['POST'])
-def get_text():
+def get_characters():
     pass
 
 

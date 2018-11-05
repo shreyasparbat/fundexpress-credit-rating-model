@@ -61,4 +61,8 @@ target/
 venv/
 \.idea/
 
+# IDE
 \.vscode/
+
+# Image testing
+images/
