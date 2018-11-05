@@ -124,11 +124,12 @@ def make_prediction():
         features.append(0)
         features.append(1)
         features.append(0)
-    elif address == 'N':
+    else:
         features.append(0)
         features.append(0)
         features.append(1)
 
+    # Add Phone
     if tel == 'H':
         features.append(1)
         features.append(0)
