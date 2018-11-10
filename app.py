@@ -107,7 +107,7 @@ def make_prediction():
         features.append(0)
         features.append(1)
         features.append(0)
-    elif nation == 'T':
+    else:
         features.append(0)
         features.append(0)
         features.append(0)
