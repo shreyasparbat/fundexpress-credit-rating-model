@@ -107,7 +107,7 @@ def make_prediction():
         features.append(0)
         features.append(1)
         features.append(0)
-    elif nation == 'T':
+    else:
         features.append(0)
         features.append(0)
         features.append(0)
@@ -124,11 +124,12 @@ def make_prediction():
         features.append(0)
         features.append(1)
         features.append(0)
-    elif address == 'N':
+    else:
         features.append(0)
         features.append(0)
         features.append(1)
 
+    # Add Phone
     if tel == 'H':
         features.append(1)
         features.append(0)
@@ -143,6 +144,7 @@ def make_prediction():
     print(features_array.shape)
 
     # Make predictions
+    clf = joblib.load('models/model.pkl')
     predicted_probs = clf.predict_proba(features_array)
     c_percent = predicted_probs[0, 0]
     d_percent = predicted_probs[0, 1]
@@ -190,5 +192,4 @@ def get_characters():
 
 # Run server
 if __name__ == '__main__':
-    clf = joblib.load('models/model_3.pkl')
     app.run(host='0.0.0.0')
