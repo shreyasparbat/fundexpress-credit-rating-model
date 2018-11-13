@@ -94,15 +94,15 @@ def get_charaters(image, height_resised=512, width_resised=512, confidence_limit
 	# Gray scale image
 	image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-	# Applying adaptive thresholding
-	image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 1)
-	cv2.imshow('Adaptive threshold', image)
-	cv2.waitKey(0)
+	# # Applying adaptive thresholding
+	# image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 1)
+	# cv2.imshow('Adaptive threshold', image)
+	# cv2.waitKey(0)
 
-	# Applying gaussian blur
-	image = cv2.GaussianBlur(image, (7, 7), 0)
-	cv2.imshow('Gaussian blur', image)
-	cv2.waitKey(0)
+	# # Applying gaussian blur
+	# image = cv2.GaussianBlur(image, (7, 7), 0)
+	# cv2.imshow('Gaussian blur', image)
+	# cv2.waitKey(0)
 
 	# Loop over the bounding boxes
 	results = []
@@ -118,6 +118,7 @@ def get_charaters(image, height_resised=512, width_resised=512, confidence_limit
 
 		# Extract bounding box as roi (region of interest)
 		roi = image[startY:endY, startX:endX]
+		roi = cv2.adaptiveThreshold(roi, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 1)
 
 		# In order to apply Tesseract v4 to OCR text we must supply
 		# (1) a language, (2) an OEM flag of 4, indicating that the we
