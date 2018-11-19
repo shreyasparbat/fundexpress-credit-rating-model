@@ -6,15 +6,21 @@ import numpy as np
 import pytesseract
 import cv2
 
-def get_charaters(image, height_resised=512, width_resised=512, confidence_limit=0.5, padding=5):
+def get_charaters(image, resise_factor = 20, confidence_limit=0.5, padding=7):
 	## Image preprocessing
 
 	# Resise image
+	height_resised = 32 * resise_factor
+	width_resised = 32 * resise_factor
 	image = cv2.resize(image, (height_resised, width_resised))
 
+	# Save orginial image for drawing puposes later
+	originial_image = image
+
 	# Display image
-	cv2.imshow("Image", image)
-	cv2.waitKey(0)
+	# cv2.imshow("Image", image)
+	# cv2.waitKey(0)
+	# cv2.imwrite('images/original.jpg', image)
 
 	## Text detection using EAST
 
@@ -94,17 +100,18 @@ def get_charaters(image, height_resised=512, width_resised=512, confidence_limit
 	# Gray scale image
 	image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-	# # Applying adaptive thresholding
-	# image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 1)
+	# Applying adaptive thresholding
+	image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 1)
 	# cv2.imshow('Adaptive threshold', image)
 	# cv2.waitKey(0)
+	# cv2.imwrite('images/thresholded.jpg', image)
 
-	# # Applying gaussian blur
+	# Applying gaussian blur
 	# image = cv2.GaussianBlur(image, (7, 7), 0)
 	# cv2.imshow('Gaussian blur', image)
 	# cv2.waitKey(0)
 
-	# Loop over the bounding boxes
+	# Loop over the bounding boxes and get text
 	results = []
 	for (startX, startY, endX, endY) in boxes:
 		# Apply padding to bounding boxes
@@ -112,9 +119,6 @@ def get_charaters(image, height_resised=512, width_resised=512, confidence_limit
 		startY = max(0, startY - padding)
 		endX = min(width_resised, endX + padding)
 		endY = min(height_resised, endY + padding)
-	
-		# Draw the bounding box on the image (TESING PURPOSES ONLY)
-		cv2.rectangle(image, (startX, startY), (endX, endY), (0, 255, 0), 2)
 
 		# Extract bounding box as roi (region of interest)
 		roi = image[startY:endY, startX:endX]
@@ -139,17 +143,21 @@ def get_charaters(image, height_resised=512, width_resised=512, confidence_limit
 	
 	# Loop over the results
 	ocr_outputs = []
+	marked_image = originial_image
 	for ((startX, startY, endX, endY), text) in results:
 		# display the text OCR'd by Tesseract
 		print("OCR TEXT")
 		print("========")
 		print("{}\n".format(text))
 	
+		# Draw the bounding box on the image (TESING PURPOSES ONLY)
+		cv2.rectangle(marked_image, (startX, startY), (endX, endY), (0, 255, 0), 2)
+	
 		# Strip out non-ASCII text so we can draw the text on the image
 		# using OpenCV, then draw the text and a bounding box surrounding
 		# the text region of the input image
 		text = "".join([c if ord(c) < 128 else "" for c in text]).strip()
-		cv2.putText(image, text, (startX, startY - 20),
+		cv2.putText(marked_image, text, (startX, startY - 20),
 			cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3
 		)
 		
@@ -158,16 +166,11 @@ def get_charaters(image, height_resised=512, width_resised=512, confidence_limit
 	
 
 	# Show the output image
-	cv2.imshow("Text detected", image)
-	cv2.waitKey(0)
+	# cv2.imshow("Text detected", marked_image)
+	# cv2.waitKey(0)
+	# cv2.imwrite('images/final.jpg', marked_image)
 
 	# Return all ocr outputs
-	return ocr_outputs
+	return originial_image, image, marked_image, ocr_outputs
 
-print(get_charaters(cv2.imread('./images/bar.jpg')))
-
-
-# image = cv2.imread('./images/pamp4.jpg')
-# config = ("-l eng --oem 1 --psm 7")
-# text = pytesseract.image_to_string(image, config=config)
-# print(text)	
+# print(get_charaters(cv2.imread('./images/pamp4.jpg')))
