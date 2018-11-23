@@ -1,5 +1,9 @@
 # Import libraries
 import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.cross_validation import train_test_split
+from sklearn.externals import joblib
 from flask import Flask, request, jsonify
 from sklearn.externals import joblib
 import traceback
@@ -196,7 +200,31 @@ def make_prediction():
 @app.route('/retrainCreditRatingModel', methods=['POST'])
 def retrain():
     try:
-        pass
+        # Get and parse file
+        file = request.form['fileUpload']
+        data = pd.read_excel(file)
+        print(data.head())
+
+        # Get dummies and save dependent variable
+        status_list = data.Status.tolist()
+        model_3_df = model_3_df.drop(['Status'], axis=1)
+        model_3_dummied_df = pd.get_dummies(model_3_df)
+        model_3_dummied_df['Status'] = status_list
+        model_3_dummied_df.head()
+
+        # Get dependent and independent variable arrays
+        x = model_3_dummied_df.iloc[:, :-1].values
+        y = model_3_dummied_df.iloc[:, -1].values
+
+        # Get training and test sets
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random_state=0)
+
+        # Create and fit classifier
+        classifier = RandomForestClassifier(n_estimators=300, criterion='entropy', random_state=0)
+        classifier.fit(x_train, y_train)
+
+        # Pickle and save model
+        joblib.dump(classifier, 'models/model.pkl')
     except:
         return traceback.format_exc()
 
