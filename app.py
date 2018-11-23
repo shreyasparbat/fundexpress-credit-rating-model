@@ -421,9 +421,6 @@ def run_ocr(image, resise_factor=20, confidence_limit=0.5, padding=7):
     return ocr_outputs
 
 
-# print(get_charaters(cv2.imread('./images/pamp4.jpg')))
-
-
 # Run server
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
