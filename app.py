@@ -236,10 +236,10 @@ def get_characters():
     item_id = request.form['itemID']
     time.sleep(4)
     front_image = requests.get(
-        'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_front.jpg'
+        'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_front.png'
     )
     back_image = requests.get(
-        'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_back.jpg'
+        'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_back.png'
     )
 
     # Run OCR on both images
