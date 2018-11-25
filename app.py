@@ -234,7 +234,7 @@ def retrain():
 def get_characters():
     # Get images
     item_id = request.form['itemID']
-    time.sleep(4)
+    time.sleep(2)
     front_image = requests.get(
         'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_front.jpg'
     )
