@@ -242,8 +242,8 @@ def get_characters():
     back_image = requests.get(back_url)
 
     # Run OCR on both images
-    front_output = run_ocr(cv2.imread(front_image.content))
-    back_output = run_ocr(cv2.imread(back_image.content))
+    front_output = run_ocr(imageio.imread(front_image.content))
+    back_output = run_ocr(imageio.imread(back_image.content))
 
     # Return json response
     return jsonify({
