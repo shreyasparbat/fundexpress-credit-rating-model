@@ -234,16 +234,12 @@ def retrain():
 def get_characters():
     # Get images
     item_id = request.form['itemID']
-    print('before sleep')
-    print('id: ' + str(item_id))
+    front_url = 'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_front.jpg'
+    back_url = 'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_back.jpg'
+    print(back_url)
     time.sleep(5)
-    print('sleep done. id: ' + str(item_id))
-    front_image = requests.get(
-        'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_front.jpg'
-    )
-    back_image = requests.get(
-        'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_back.jpg'
-    )
+    front_image = requests.get(front_url)
+    back_image = requests.get(back_url)
 
     # Run OCR on both images
     front_output = run_ocr(cv2.imread(front_image.content))
