@@ -242,7 +242,7 @@ def get_characters():
         'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_front.jpg'
     )
     back_image = requests.get(
-        'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_back.jgp'
+        'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_back.jpg'
     )
 
     # Run OCR on both images
