@@ -235,6 +235,7 @@ def get_characters():
     # Get images
     item_id = request.form['itemID']
     time.sleep(5)
+    print(str(item_id))
     front_image = requests.get(
         'https://fundexpress-api-storage.sgp1.digitaloceanspaces.com/item-images/' + str(item_id) + '_front.jpg'
     )
